@@ -130,8 +130,8 @@ class _SplashPageState
                     child: Image.asset(
                       'assets/images/OccasionLogo.png',
                       fit: BoxFit.contain,
-                      color: Colors.white.withOpacity(0.9),
-                      colorBlendMode: BlendMode.overlay,
+                      //color: Colors.white.withOpacity(0.9),
+                      //colorBlendMode: BlendMode.overlay,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
                           decoration: BoxDecoration(
