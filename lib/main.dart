@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:occasions/screens/splash_page.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'core/routes/app_routes.dart';
+import 'core/routes/route_generator.dart';
+import 'core/constants/app_colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,31 +11,28 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Occasions',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppColors.primaryBrown,
+          primary: AppColors.primaryBrown,
+          secondary: AppColors.accentGold,
+        ),
         useMaterial3: true,
+        textTheme: GoogleFonts.poppinsTextTheme(),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.primaryBrown,
+            foregroundColor: Colors.white,
+          ),
+        ),
       ),
-      home: const SplashPage(),
+      initialRoute: AppRoutes.splash,
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
-  }
-}
-
-class App extends StatefulWidget {
-  const App({super.key});
-
-  @override
-  State<App> createState() => _AppState();
-}
-
-class _AppState extends State<App> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }

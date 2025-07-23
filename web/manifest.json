@@ -1,6 +1,6 @@
 {
-    "name": "occasions",
-    "short_name": "occasions",
+    "name": "final_occasions",
+    "short_name": "final_occasions",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

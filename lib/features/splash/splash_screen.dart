@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:occasions/screens/sign_in_page.dart';
+import '../../core/constants/app_colors.dart';
+import '../../core/constants/app_dimensions.dart';
+import '../../core/routes/app_routes.dart';
+import '../../core/utils/extensions.dart';
 
-class SplashPage
+class SplashScreen
     extends StatefulWidget {
-  const SplashPage(
+  const SplashScreen(
       {super.key});
 
   @override
-  State<SplashPage> createState() =>
-      _SplashPageState();
+  State<SplashScreen> createState() =>
+      _SplashScreenState();
 }
 
-class _SplashPageState
-    extends State<SplashPage>
+class _SplashScreenState
+    extends State<SplashScreen>
     with
         TickerProviderStateMixin {
   late AnimationController
@@ -29,20 +32,18 @@ class _SplashPageState
       initState() {
     super.initState();
 
-    // Initialize animation controllers
     _fadeController =
         AnimationController(
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: AppDimensions.splashFadeDuration),
       vsync: this,
     );
 
     _scaleController =
         AnimationController(
-      duration: const Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: AppDimensions.splashScaleDuration),
       vsync: this,
     );
 
-    // Initialize animations
     _fadeAnimation =
         Tween<double>(
       begin: 0.0,
@@ -61,10 +62,8 @@ class _SplashPageState
       curve: Curves.elasticOut,
     ));
 
-    // Start animations
     _startAnimations();
 
-    // Navigate to sign in page after delay
     _navigateToSignIn();
   }
 
@@ -79,31 +78,14 @@ class _SplashPageState
 
   void
       _navigateToSignIn() {
-    Future.delayed(const Duration(seconds: 3),
-        () {
-      if (mounted) {
-        Navigator.of(context).pushReplacement(
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => const SignInPage(),
-            transitionDuration: const Duration(milliseconds: 800),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity: animation,
-                child: child,
-              );
-            },
-          ),
-        );
-      }
-    });
-  }
-
-  @override
-  void
-      dispose() {
-    _fadeController.dispose();
-    _scaleController.dispose();
-    super.dispose();
+    Future.delayed(
+      const Duration(milliseconds: AppDimensions.splashNavigationDelay),
+      () {
+        if (mounted) {
+          context.pushReplacementNamed(AppRoutes.signIn);
+        }
+      },
+    );
   }
 
   @override
@@ -114,7 +96,7 @@ class _SplashPageState
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
-          color: Color(0xFF403426),
+          color: AppColors.splashBackground,
         ),
         child: Center(
           child: AnimatedBuilder(
@@ -124,9 +106,9 @@ class _SplashPageState
                 scale: _scaleAnimation.value,
                 child: FadeTransition(
                   opacity: _fadeAnimation,
-                  child: Container(
-                    width: 200,
-                    height: 200,
+                  child: SizedBox(
+                    width: AppDimensions.splashLogoSize,
+                    height: AppDimensions.splashLogoSize,
                     child: Image.asset(
                       'assets/images/OccasionLogo.png',
                       fit: BoxFit.contain,
@@ -158,5 +140,13 @@ class _SplashPageState
         ),
       ),
     );
+  }
+
+  @override
+  void
+      dispose() {
+    _fadeController.dispose();
+    _scaleController.dispose();
+    super.dispose();
   }
 }
